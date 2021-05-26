@@ -1,9 +1,15 @@
+// @ts-check
 import React from 'react';
 
 import { H5PContext } from '../../../context/H5PContext';
 import Button from "./Button/Button";
 
 export default class AudioButton extends React.Component {
+  /**
+   * @param {Object} props 
+   * @param {number} props.sceneId
+   * @param {Array} props.sceneAudioTrack
+   */
   constructor(props) {
     super(props);
 
@@ -29,7 +35,7 @@ export default class AudioButton extends React.Component {
   /**
    * Get track from given player ID
    *
-   * @param {string} props
+   * @param {string} id
    * @return {Array}
    */
   getTrack = (id) => {
