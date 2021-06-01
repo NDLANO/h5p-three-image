@@ -57,8 +57,6 @@ export const defaultAppContext = {
   on: () => undefined,
   getRatio: () => 16 / 9,
   trigger: (eventName, data) => {
-    console.log(eventName);
-    console.log(data);
     H5P.jQuery("root").trigger(eventName, data);
   },
 };

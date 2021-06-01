@@ -14,7 +14,6 @@ export default class ScoreSummary extends React.Component {
     for(const scene in this.context.params.scenes){
       const sceneScores = scores[scene];
       for(const [id, score] of Object.entries(sceneScores)){
-        console.log("getToalScores score", score);
         if(id !== "title") {
           totalScores.score += score.raw;
           totalScores.max += score.max;  
@@ -25,7 +24,6 @@ export default class ScoreSummary extends React.Component {
   }
   
   render() {
-    console.log("score props", this.props);
     const items = []
     const totalScores = this.getToalScores(this.props.scores);
     for (const [sceneId, sceneScores] of Object.entries(this.props.scores)) {
