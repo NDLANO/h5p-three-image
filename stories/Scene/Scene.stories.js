@@ -29,6 +29,9 @@ openSceneContentAppContext.params.scenes[0] = {
   scenesrc: { path: imageScene },
   cameraStartPosition: "0,0",
 };
+const scoresContext = { ...assignmentAppContext};
+scoresContext.behavior.showScoresButton = true;
+
 
 const panoramaContentContext = { ...defaultAppContext };
 panoramaContentContext.params.scenes[0] = {
@@ -46,6 +49,13 @@ export default {
   },
 };
 
+const scoresTemplate = (args) => (
+  <H5PContext.Provider value={scoresContext}>
+    <Main {...args}>
+      <Scene {...args}></Scene>
+    </Main>
+  </H5PContext.Provider>
+);
 const assignmentTemplate = (args) => (
   <H5PContext.Provider value={assignmentContext}>
     <Main {...args}>
@@ -78,61 +88,45 @@ const Template = (args) => (
   </H5PContext.Provider>
 );
 
-
-
-export const SceneStory = Template.bind({});
-SceneStory.args = {
-  label: "test",
+cont storyargs = {
   forceStartScreen: undefined,
   forceStartCamera: undefined,
   currentScene: 1,
-  setCurrentSceneId: 1,
+  setCurrentSceneId: (id)=>1,
   imageSrc: {
     path: imageScene,
   },
   addThreeSixty: (tS) => undefined,
   onSetCameraPos: () => undefined,
+}:
+
+export const SceneStory = Template.bind({});
+SceneStory.args = {
+  ...storyargs,
+  label: "test",
 };
 
 export const SceneStoryWithAssignment = assignmentTemplate.bind({});
 SceneStoryWithAssignment.args = {
+  ...storyargs,
   label: "Assignment",
-  forceStartScreen: undefined,
-  forceStartCamera: undefined,
-  currentScene: 1,
-  setCurrentSceneId: (id)=>1,
-  imageSrc: {
-    path: imageScene,
-  },
-  addThreeSixty: (tS) => undefined,
-  onSetCameraPos: () => undefined,
 };
 
 export const SceneStoryWithOpenSceneContent = openSceneContentTemplate.bind({});
 SceneStoryWithOpenSceneContent.args = {
+  ...storyargs,
   label: "Open Scene Content",
-  forceStartScreen: undefined,
-  forceStartCamera: undefined,
-  currentScene: 1,
-  setCurrentSceneId: (id)=>1,
-  imageSrc: {
-    path: imageScene,
-  },
-  addThreeSixty: (tS) => undefined,
-  onSetCameraPos: () => undefined,
 };
 
 
 export const SceneStoryWithPanoramaSceneContent = panoramaContentTemplate.bind({});
 SceneStoryWithPanoramaSceneContent.args = {
+  ...storyargs,
   label: "Panorama Scene Content",
-  forceStartScreen: undefined,
-  forceStartCamera: undefined,
-  currentScene: 1,
-  setCurrentSceneId: (id)=>1,
-  imageSrc: {
-    path: imageScene,
-  },
-  addThreeSixty: (tS) => undefined,
-  onSetCameraPos: () => undefined,
+};
+
+export const SceneStoryWithScore = scoresTemplate.bind({});
+SceneStoryWithScore.args = {
+  ...storyargs,
+  label: "Scores",
 };

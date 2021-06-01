@@ -34,7 +34,6 @@ export const defaultAppContext = {
       {
         sceneId: 1,
         scenename: "test",
-        showSceneDescriptionInitially: false,
         interactions: [
           {
             label: {
@@ -58,6 +57,8 @@ export const defaultAppContext = {
   on: () => undefined,
   getRatio: () => 16 / 9,
   trigger: (eventName, data) => {
+    console.log(eventName);
+    console.log(data);
     H5P.jQuery("root").trigger(eventName, data);
   },
 };
