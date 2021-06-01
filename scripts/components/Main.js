@@ -156,7 +156,6 @@ export default class Main extends React.Component {
     const scoreCard = {}
     for(const sceneId in this.context.params.scenes){
       const scene = this.context.params.scenes[sceneId];
-      console.log("initialScoreCard, scene", scene);
       scoreCard[sceneId] = this.initialSceneScoreCard(scene);
     }
     return scoreCard;
@@ -168,7 +167,6 @@ export default class Main extends React.Component {
     };
     for(let i = 0; i < scene.interactions.length; i++){
       const interaction = scene.interactions[i];
-      console.log("interaction",interaction);
       switch(interaction.action.library) {
         case "H5P.Summary 1.10":
           sceneScoreCard[i]={title: interaction.label.labelText, raw: 0, max: 1, scaled: 0};
@@ -450,7 +448,6 @@ export default class Main extends React.Component {
       this.state.scoreCard[sceneId] = {};
     }
     this.state.scoreCard[sceneId][assignmentId] = score;
-    console.log("scoreCard", this.state.scoreCard);
   }
 
   render() {

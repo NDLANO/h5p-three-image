@@ -6,10 +6,7 @@ export default class SceneScores extends React.Component {
     super(props);
   }
 
-  render() {
-    
-    console.log(this.props);
-    
+  render() { 
     const items = []
     for (const [title, score] of Object.entries(this.props.sceneScores)){
       items.push(<tr><td>{title}</td><td>{score}</td></tr>)

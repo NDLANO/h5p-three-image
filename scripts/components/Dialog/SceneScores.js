@@ -14,8 +14,6 @@ export default class SceneTotalScores extends React.Component {
   }
 
   render() {
-    console.log(this.props);
-    console.log("context", this.context);
     const sceneTitle = this.getSceneTitle(this.props.sceneId, this.props.sceneScores.title);
     const totalScore = 0;
     const items = []
