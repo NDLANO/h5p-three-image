@@ -306,7 +306,10 @@ export default class ThreeSixtyScene extends React.Component {
   addInteractionHotspots(threeSixty, interactions) {
     const list = interactions ? interactions.map(this.createInteraction) : [];
 
+    /** @type {Array<JSX.Element>} */
     const components2d = [];
+
+    /** @type {Array<JSX.Element>} */
     const components3d = [];
 
     for (const interaction of list) {
@@ -333,7 +336,7 @@ export default class ThreeSixtyScene extends React.Component {
       <H5PContext.Provider value={this.context}>
         { components3d }
       </H5PContext.Provider>,
-      rendererElement3d.firstChild,
+      /** @type {HTMLElement} */ (rendererElement3d.firstChild),
     );    
   }
 
