@@ -22,6 +22,7 @@ H5P.ThreeSixty = (function (EventDispatcher, THREE) {
    * @param {number} options.cameraStartPosition.yaw 0 = Center of image
    * @param {number} options.cameraStartPosition.pitch 0 = Center of image
    * @param {number} options.segments
+   * @param {boolean} options.isPanorama
    */
   function ThreeSixty(sourceElement, options) {
     /** @alias H5P.ThreeSixty# */
@@ -31,7 +32,7 @@ H5P.ThreeSixty = (function (EventDispatcher, THREE) {
     EventDispatcher.call(self);
 
     // Settings
-    const fieldOfView = 75;
+    const fieldOfView = options.isPanorama ? 53 : 75;
     const near = 0.1;
     const far = 1000;
     let ratio = options.ratio ? options.ratio : 16 / 9;
@@ -437,7 +438,7 @@ H5P.ThreeSixty = (function (EventDispatcher, THREE) {
     };
 
     // Add camera controls
-    var cameraControls = new PositionControls(css2dRenderer.domElement, 400, true, true);
+    var cameraControls = new PositionControls(css2dRenderer.domElement, 400, true, true, options.isPanorama);
 
     // Workaround for touchevent not cancelable when CSS 'perspective' is set.
     renderer.domElement.addEventListener('touchmove', function (e) { });
@@ -510,8 +511,9 @@ H5P.ThreeSixty = (function (EventDispatcher, THREE) {
    * @param {number} [friction] Determines the speed of the movement
    * @param {boolean} [shouldInvert] Needed to invert controls for camera
    * @param {boolean} [isCamera]
+   * @param {boolean} [isPanorama]
    */
-  function PositionControls(element, friction, shouldInvert, isCamera) {
+  function PositionControls(element, friction, shouldInvert, isCamera, isPanorama) {
     /** @type PositionControls# */
     var self = this;
 
@@ -591,7 +593,10 @@ H5P.ThreeSixty = (function (EventDispatcher, THREE) {
     var move = function (deltaX, deltaY, f) {
       // Prepare move event
       var moveEvent = new H5P.Event('move');
-
+      if(isPanorama) {
+        deltaY = 0;
+      }
+      
       // Update position relative to cursor speed
       moveEvent.alphaDelta = deltaX / f;
       moveEvent.betaDelta = deltaY / f;
