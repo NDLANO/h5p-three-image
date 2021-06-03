@@ -211,6 +211,7 @@ export default class ThreeSixtyScene extends React.Component {
         ratio: 16/9,
         cameraStartPosition: cameraPosition,
         segments: sceneRenderingQualityMapping[this.context.sceneRenderingQuality],
+        isPanorama: this.props.isPanorama
       });
       this.props.addThreeSixty(threeSixty);
     }
@@ -234,7 +235,6 @@ export default class ThreeSixtyScene extends React.Component {
     });
 
     threeSixty.startRendering();
-    console.log("isPanorama", this.props.isPanorama);
     if(this.props.isPanorama){
       threeSixty.updateCylinder();  
     } else {
