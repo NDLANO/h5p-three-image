@@ -401,7 +401,6 @@ export default class ThreeSixtyScene extends React.Component {
           key={key}
           mouseDownHandler={null}
           staticScene={false}
-          forceClickHandler={false}
           sceneId={this.props.sceneId}
           leftPosition={null}
           topPosition={null}
@@ -409,7 +408,6 @@ export default class ThreeSixtyScene extends React.Component {
           onMount={onMount}
           onUnmount={onUnmount}
           onUpdate={onUpdate}
-          clickHandler={this.props.showInteraction.bind(this, index)}
           doubleClickHandler={() => {
             this.context.trigger('doubleClickedInteraction', index);
           }}
@@ -417,6 +415,8 @@ export default class ThreeSixtyScene extends React.Component {
             this.handleInteractionFocus(interaction);
           }}
           ariaLabel={null}
+          isFocused={this.props.focusedInteraction === index}
+          onBlur={this.props.onBlurInteraction}
         >
           {
             this.context.extras.isEditor &&
