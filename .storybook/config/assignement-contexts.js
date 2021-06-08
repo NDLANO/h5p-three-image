@@ -26,7 +26,8 @@ export const assignmentAppContext = {
     lockedStateAction: "Unlock",
     total: "Total",
     score: "Score",
-    assignment: "Assignment"
+    assignment: "Assignment",
+    scoreSummary: "scoreSummary",
   },
   params: {
     startSceneId: 1,

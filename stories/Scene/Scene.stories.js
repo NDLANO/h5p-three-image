@@ -88,7 +88,7 @@ const Template = (args) => (
   </H5PContext.Provider>
 );
 
-cont storyargs = {
+const storyargs = {
   forceStartScreen: undefined,
   forceStartCamera: undefined,
   currentScene: 1,
@@ -98,7 +98,7 @@ cont storyargs = {
   },
   addThreeSixty: (tS) => undefined,
   onSetCameraPos: () => undefined,
-}:
+};
 
 export const SceneStory = Template.bind({});
 SceneStory.args = {
