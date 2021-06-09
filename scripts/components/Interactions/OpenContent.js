@@ -8,7 +8,18 @@ import { H5PContext } from "../../context/H5PContext";
  * @typedef {{
  *  sceneId: number;
  *  interactionIndex: number;
- *  handleFocus: () => void;
+ *  topPosition: number;
+ *  leftPosition: number;
+ *  staticScene: boolean;
+ *  ariaLabel: string;
+ *  doubleClickHandler: () => void;
+ *  mouseDownHandler: (event: MouseEvent) => void;
+ *  onFocus: () => void;
+ *  onMount: (openContentWrapper: HTMLElement) => void;
+ *  onUnmount: (openContentWrapper: HTMLElement) => void;
+ *  onUpdate: (openContentWrapper: HTMLElement) => void;
+ *  isFocused: boolean;
+ *  onBlur: () => void;
  * }} Props
  */
 
@@ -19,6 +30,9 @@ export default class OpenContent extends React.Component {
   constructor(props) {
     super(props);
 
+    this.onFocus = this.onFocus.bind(this);
+    this.onBlur = this.onBlur.bind(this);
+
     this.state = {
       anchorDrag: false,
       canDrag: false,
@@ -28,10 +42,56 @@ export default class OpenContent extends React.Component {
       startMidPoint: 0,
       sizeWidth: 0,
       sizeHeight: 0,
+      isFocused: this.props.isFocused,
     };
 
     this.openContent = React.createRef();
     this.openContentWrapper = React.createRef();
+  }
+
+  addFocusListener() {
+    if (this.openContentWrapper) {
+      this.openContentWrapper.current.addEventListener('focus', this.onFocus);
+    }
+  }
+
+  /**
+   * @param {FocusEvent} event 
+   */
+   onFocus(event) {
+    // Already focused
+    if (this.state.isFocused) {
+      return;
+    }
+
+    this.setState({
+      isFocused: true,
+    });
+
+    if (this.props.onFocusedInteraction) {
+      this.props.onFocusedInteraction();
+    }
+  }
+
+  /**
+   * @param {FocusEvent} event 
+   */
+   onBlur(event) {
+    const openContentWrapper = this.openContentWrapper
+      && this.openContentWrapper.current;
+
+    if (openContentWrapper && openContentWrapper.contains(event.relatedTarget)) {
+      // Clicked target is child of button wrapper and not the expandButton, don't blur
+      this.setFocus();
+      return;
+    }
+
+    this.setState({
+      isFocused: false,
+    });
+    if (this.props.onBlur) {
+      this.props.onBlur();
+    }
   }
 
   componentDidMount() {
@@ -44,6 +104,31 @@ export default class OpenContent extends React.Component {
     if (this.props.onMount) {
       // Let parent know this element should be added to the THREE world.
       this.props.onMount(this.openContentWrapper.current);
+    }
+
+    this.addFocusListener();
+    if (this.state.isFocused) {
+      setTimeout(() => {
+        this.setFocus();
+      }, 0);
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.props.onUnmount) {
+      const el = this.openContentWrapper.current;
+      // We want this to run after the component is removed
+      setTimeout(() => {
+        // Let parent know this element should be remove from the THREE world.
+        this.props.onUnmount(el);
+      }, 0);
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.props.onUpdate) {
+      // Let parent know this element is updated. (Position might have changed.)
+      this.props.onUpdate(this.openContentWrapper.current);
     }
   }
 
@@ -177,19 +262,6 @@ export default class OpenContent extends React.Component {
       return "";
     }
   }
-  onClick() {
-    const hasClickHandler = this.props.forceClickHandler
-      || !this.context.extras.isEditor;
-
-    if (hasClickHandler) {
-      this.props.clickHandler();
-
-      // Reset button focus state when changing scenes or opening content
-      this.setState({
-        innerButtonFocused: false
-      });
-    }
-  }
 
   onDoubleClick() {
     if (this.props.doubleClickHandler) {
@@ -252,15 +324,10 @@ export default class OpenContent extends React.Component {
     }
 
     // Add classname to current active element (wrapper, button or expand label button) so it can be shown on top
-    if (
-      (this.state.isFocused && this.props.children) ||
-      this.state.expandButtonFocused ||
-      this.state.innerButtonFocused
-    ) {
+    if (this.state.isFocused && this.props.children)
+    {
       wrapperClasses.push("active-element");
     }
-
-    const isWrapperTabbable = this.context.extras.isEditor;
 
     const DragButton = (innerProps) => {
       const hotspotBtnRef = useRef(null);
@@ -301,8 +368,8 @@ export default class OpenContent extends React.Component {
               ? "drag drag--horizontal"
               : "drag drag--vertical"
           }
+          tabIndex={innerProps.tabIndex}
           ref={hotspotBtnRef}
-          tabIndex={this.props.tabIndexValue}
           aria-label={
             innerProps.horizontalDrag
               ? this.context.l10n.hotspotDragHorizAlt
@@ -317,10 +384,11 @@ export default class OpenContent extends React.Component {
         ref={this.openContentWrapper}
         className={wrapperClasses.join(" ")}
         style={this.getStyle()}
-        tabIndex={isWrapperTabbable ? 0 : undefined}
+        tabIndex={0}
         onFocus={this.handleFocus}
+        onBlur={this.onBlur.bind(this)}
       >
-        <div
+        <div 
           className={`open-content ${
             this.context.extras.isEditor ? "open-content--editor" : ""
           }`}
@@ -330,12 +398,9 @@ export default class OpenContent extends React.Component {
             width: this.state.sizeWidth + "px",
             height: this.state.sizeHeight + "px",
           }}
-          tabIndex={this.props.tabIndexValue}
           onDoubleClick={this.onDoubleClick.bind(this)}
           onMouseDown={this.onMouseDown.bind(this)}
           onMouseUp={this.setFocus.bind(this)}
-          onFocus={() => this.setState({ innerButtonFocused: true })}
-          onBlur={() => this.setState({ innerButtonFocused: false })}
         >
           <div
             className={"inner-content"}
@@ -345,8 +410,14 @@ export default class OpenContent extends React.Component {
           />
           {this.context.extras.isEditor ? (
             <>
-              <DragButton horizontalDrag={true} />
-              <DragButton horizontalDrag={false} />
+              <DragButton 
+                horizontalDrag={true}
+                tabIndex={-1}
+              />
+              <DragButton 
+                horizontalDrag={false} 
+                tabIndex={-1} 
+              />
             </>
           ) : (
             ""
