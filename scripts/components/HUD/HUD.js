@@ -42,7 +42,7 @@ export default class HUD extends React.Component {
    * React - create DOM elements
    */
   render() {
-    const showScoresButton = this.context.behavior.showScoresButton;
+    const showScoresButton = this.props.showScoresButton;
     const isThreeSixty = this.props.scene.sceneType === SceneTypes.THREE_SIXTY_SCENE;
 
     return (

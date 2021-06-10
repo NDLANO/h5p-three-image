@@ -182,6 +182,25 @@ export default class Main extends React.Component {
     return sceneScoreCard;
   }
 
+  hasOneQuestion() {
+    for(const sceneId in this.context.params.scenes){
+      const scene = this.context.params.scenes[sceneId];
+      for(let i = 0; i < scene.interactions.length; i++){
+        const interaction = scene.interactions[i];
+        switch(interaction.action.library) {
+          case "H5P.Summary 1.10":
+            return true;
+            break;
+          case "H5P.SingleChoiceSet 1.11":
+            return true;
+          default:
+            // Noop
+        }
+      }
+    }
+    return false;
+  }
+
   navigateToScene(sceneId) {
     this.setState({
       sceneWaitingForLoad: this.props.currentScene,
@@ -582,6 +601,7 @@ export default class Main extends React.Component {
           isStartScene = {isStartScene}
           onGoToStartScene={ this.goToStartScene.bind(this) }
           onShowingScoreSummary={this.handleScoreSummary}
+          showScoresButton={this.context.behavior.showScoresButton && this.hasOneQuestion()}
         />
       </div>
     );

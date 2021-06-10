@@ -33,7 +33,9 @@ const scoresContext = { ...assignmentAppContext};
 scoresContext.behavior.showScoresButton = true;
 
 
-const panoramaContentContext = { ...defaultAppContext };
+const panoramaContentContext = {...defaultAppContext};
+//do proper deep clone here
+panoramaContentContext.params = JSON.parse(JSON.stringify(panoramaContentContext.params));
 panoramaContentContext.params.scenes[0] = {
   ...panoramaContentContext.params.scenes[0],
   scenesrc: { path: panoramaScene },
