@@ -26,12 +26,10 @@ export default class SceneTotalScores extends React.Component {
       <tbody>
         <tr><td class="h5p-td h5p-summary-task-title" colSpan={2}>{sceneTitle}</td></tr>
         {items}
-        {/* <tr><td>Total</td><td>{totalScore}</td></tr> */}
       </tbody>
     );
   }
 }
 
 SceneTotalScores.contextType = H5PContext;
-
 
