@@ -167,11 +167,12 @@ export default class Main extends React.Component {
     };
     for(let i = 0; i < scene.interactions.length; i++){
       const interaction = scene.interactions[i];
-      switch(interaction.action.library) {
-        case "H5P.Summary 1.10":
+      const libraryName = H5P.libraryFromString(interaction.action.library).machineName;
+      switch(libraryName) {
+        case "H5P.Summary":
           sceneScoreCard[i]={title: interaction.label.labelText, raw: 0, max: 1, scaled: 0};
           break;
-        case "H5P.SingleChoiceSet 1.11":
+        case "H5P.SingleChoiceSet":
           sceneScoreCard[i]={title: interaction.label.labelText, raw: 0, max: interaction.action.params.choices.length, scaled: 0};
           break;
         default:
