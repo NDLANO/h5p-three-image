@@ -28,6 +28,7 @@ export const assignmentAppContext = {
     score: "Score",
     assignment: "Assignment",
     scoreSummary: "scoreSummary",
+    scene: "Scene",
   },
   params: {
     startSceneId: 1,

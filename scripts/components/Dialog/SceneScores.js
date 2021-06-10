@@ -8,9 +8,9 @@ export default class SceneTotalScores extends React.Component {
   
   getSceneTitle(sceneId, sceneTitle){
     if(sceneTitle !== undefined && sceneTitle !== ""){
-      return `Scene: ${sceneTitle}`
+      return `${this.context.l10n.scene}: ${sceneTitle}`
     }
-    return `Scene: ${sceneId}`
+    return `${this.context.l10n.scene}: ${sceneId}`
   }
 
   render() {
