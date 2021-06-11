@@ -7,6 +7,8 @@ import {sceneRenderingQualityMapping} from "./components/Scene/SceneTypes/ThreeS
 
 // Load library
 H5P = H5P || {};
+
+
 H5P.ThreeImage = (function () {
 
   function Wrapper(params, contentId, extras) {
@@ -224,6 +226,15 @@ H5P.ThreeImage = (function () {
       this.threeSixty.setSegmentNumber(segments);
       this.sceneRenderingQuality = quality;
     };
+
+    //Makes sure the user is warned before closing th window
+    window.addEventListener('beforeunload', function (e) {
+      if(e.target.body.firstChild.classList.contains("h5p-threeimage-editor")){
+        return;
+      }
+      e.preventDefault();
+      e.returnValue = '';
+    });
   }
 
   /**
