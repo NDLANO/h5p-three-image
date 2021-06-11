@@ -13,6 +13,7 @@ H5P.ThreeImage = (function () {
 
   function Wrapper(params, contentId, extras) {
     extras = extras || {};
+
     this.forceStartScreen = (extras.forceStartScreen !== undefined
       && extras.forceStartScreen >= 0)
       ? extras.forceStartScreen : null;
@@ -226,15 +227,8 @@ H5P.ThreeImage = (function () {
       this.threeSixty.setSegmentNumber(segments);
       this.sceneRenderingQuality = quality;
     };
-
-    //Makes sure the user is warned before closing the window
-    window.addEventListener('beforeunload', function (e) {
-      if(e.target.body.firstChild.classList.contains("h5p-threeimage-editor")){
-        return;
-      }
-      e.preventDefault();
-      e.returnValue = '';
-    });
+    
+    
   }
 
   /**
