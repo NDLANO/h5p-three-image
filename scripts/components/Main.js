@@ -140,7 +140,7 @@ export default class Main extends React.Component {
     }
 
     //Makes sure the user is warned before closing the window
-    window.addEventListener('beforeunload', function (e) {
+    window.addEventListener('beforeunload', (e) => {
       if(e.target.body.firstChild.classList.contains("h5p-threeimage-editor")
         || this.state.scoreCard.numQuestionsInTour === 0
         || this.state.scoreCard.totalQuestionsCompleted === 0)
@@ -149,7 +149,7 @@ export default class Main extends React.Component {
       }
       e.preventDefault();
       e.returnValue = '';
-    }.bind(this));
+    });
   }
 
   setFocusedInteraction(focusedInteraction) {
