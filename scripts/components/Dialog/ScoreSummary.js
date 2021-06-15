@@ -31,7 +31,6 @@ export default class ScoreSummary extends React.Component {
 
   render() {
     const items = []
-    const totalScores = this.getTotalScores(this.props.scores.sceneScoreCards);
     for (const [sceneId, sceneScores] of Object.entries(this.props.scores.sceneScoreCards)) {
         items.push(<SceneScores sceneId={sceneId} sceneScores={sceneScores}></SceneScores>);
     }
