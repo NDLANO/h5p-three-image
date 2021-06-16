@@ -224,6 +224,10 @@ export default class Main extends React.Component {
   }
 
   hasOneQuestion() {
+    if(!scene.interactions) {
+      return false;
+    }
+    
     for(const sceneId in this.context.params.scenes){
       const scene = this.context.params.scenes[sceneId];
       for(let i = 0; i < scene.interactions.length; i++){
