@@ -245,7 +245,6 @@ export default class Main extends React.Component {
           default:
             // Noop
         }
-        }
       }
     }
     return false;
