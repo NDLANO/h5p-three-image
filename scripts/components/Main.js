@@ -234,18 +234,17 @@ export default class Main extends React.Component {
 
     for(const sceneId in this.context.params.scenes){
       const scene = this.context.params.scenes[sceneId];
-      if(scene.interactions) {
-        for(let i = 0; i < scene.interactions.length; i++){
-          const interaction = scene.interactions[i];
-          switch(interaction.action.library) {
-            case "H5P.Summary 1.10":
-              return true;
-              break;
-            case "H5P.SingleChoiceSet 1.11":
-              return true;
-            default:
-              // Noop
-          }
+      for(let i = 0; i < scene?.interactions?.length; i++){
+        const interaction = scene.interactions[i];
+        switch(interaction.action.library) {
+          case "H5P.Summary 1.10":
+            return true;
+            break;
+          case "H5P.SingleChoiceSet 1.11":
+            return true;
+          default:
+            // Noop
+        }
         }
       }
     }
