@@ -228,7 +228,7 @@ export default class Main extends React.Component {
   }
 
   hasOneQuestion() {
-    if(this.context.extras.isEditor || !scene || !scene.interactions) {
+    if(this.context.extras.isEditor || !this.context.params.scenes) {
       return false;
     }
 
