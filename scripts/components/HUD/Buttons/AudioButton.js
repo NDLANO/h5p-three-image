@@ -94,7 +94,7 @@ export default class AudioButton extends React.Component {
   /**
    * Handle audio button clicked
    */
-  handleClick = () => {
+  toggleIsPlaying = () => {
     // Determine player ID
     const id = this.getPlayerId(this.props);
     const player = this.getPlayer(id);
@@ -110,6 +110,15 @@ export default class AudioButton extends React.Component {
         // Start the playback!
         player.play();
       }
+    }
+  }
+
+  handleResetClick = () => {
+    const id = this.getPlayerId(this.props);
+    const player = this.getPlayer(id);
+    if (player) {
+      player.audioTrack = 0;
+      player.currentTime = 0;
     }
   }
 
@@ -206,12 +215,20 @@ export default class AudioButton extends React.Component {
 
     const type = ('audio-track' + (this.props.isPlaying === id ? ' active' : ''));
     return (
-      <Button
-        type={ type }
-        label={ this.props.isPlaying === id ? this.context.l10n.pauseAudioTrack : this.context.l10n.playAudioTrack }
-        isHiddenBehindOverlay={ this.props.isHiddenBehindOverlay }
-        onClick={ this.handleClick }
-      />
+      <>
+        <Button
+          type={ type }
+          label={ this.props.isPlaying === id ? this.context.l10n.pauseAudioTrack : this.context.l10n.playAudioTrack }
+          isHiddenBehindOverlay={ this.props.isHiddenBehindOverlay }
+          onClick={ this.toggleIsPlaying }
+        />
+        <Button
+          type="audio-track reset"
+          label={ this.context.l10n.resetAudioTrack }
+          isHiddenBehindOverlay={ this.props.isHiddenBehindOverlay }
+          onClick={ this.handleResetClick }
+        />
+      </>
     );
   }
 

@@ -82,6 +82,11 @@
   &.audio-track.active:before {
     content: $audioOff;
   }
+  &.audio-track.reset:before {
+    content: $resetAudio;
+    transform: translateX(-50%) translateY(-50%) rotateY(180deg);
+    transform-origin: center center;
+  }
 
   &.scene-description:before {
     content: $sceneDescription;

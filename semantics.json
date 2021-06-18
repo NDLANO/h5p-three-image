@@ -600,6 +600,12 @@
         "default": "Pause Audio Track"
       },
       {
+        "name": "resetAudioTrack",
+        "type": "text",
+        "label": "Label for reset audio button",
+        "default": "Reset audio"
+      },
+      {
         "name": "sceneDescription",
         "type": "text",
         "label": "Title to scene dialog",
