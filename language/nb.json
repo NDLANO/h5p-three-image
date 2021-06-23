@@ -362,8 +362,8 @@
           "default": "Scene"
         },
         {
-          "label": "Untitled",
-          "default": "Untitled"
+          "label": "Uten tittel",
+          "default": "Uten tittel"
         }
       ]
     }
