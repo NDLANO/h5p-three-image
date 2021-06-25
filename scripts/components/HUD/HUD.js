@@ -22,8 +22,13 @@ export default class HUD extends React.Component {
     const props = {
       isPlaying: this.props.audioIsPlaying,
       onIsPlaying: this.props.onAudioIsPlaying,
+      sceneWasPlaying: this.props.sceneAudioWasPlaying,
+      onSceneWasPlaying: this.props.onSceneAudioWasPlaying,
       isHiddenBehindOverlay: this.props.isHiddenBehindOverlay,
-      nextFocus: this.props.nextFocus
+      nextFocus: this.props.nextFocus,
+      restartAudioOnSceneStart: scene.restartAudioOnSceneStart,
+      updateSceneAudioPlayers: this.props.updateSceneAudioPlayers,
+      interactionAudioPlayers: this.props.interactionAudioPlayers,
     };
 
     if (scene?.audio?.length > 0 && (!scene.audioType || scene.audioType === "audio")) {
@@ -33,9 +38,10 @@ export default class HUD extends React.Component {
 
     if (scene?.audioType === "playlist" && scene?.playlist) {
       const playlist = this.checkIfPlaylist(scene, this.context.params.playlists);
-      if (playlist != null) {
+      if (playlist != null) {
         props.sceneAudioTrack = playlist.audioTracks;
         props.playlistId = playlist.playlistId;
+        props.sceneId = scene.sceneId;
       }
     }
 
@@ -46,6 +52,7 @@ export default class HUD extends React.Component {
       if (playlist != null) {
         props.sceneAudioTrack = playlist.audioTracks;
         props.playlistId = playlist.playlistId;
+        props.sceneId = scene.sceneId;
       }
     }
 

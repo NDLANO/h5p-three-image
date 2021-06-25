@@ -375,6 +375,12 @@
                 ],
                 "widget": "playlist"
               }
+            },
+            {
+              "label": "Restart audio when scene is reopened",
+              "name": "restartAudioOnSceneStart",
+              "type": "boolean",
+              "default": false
             }
           ]
         }
@@ -700,6 +706,13 @@
         "label": "Translation for 'Scene'",
         "importance": "low",
         "default": "Scene"
+      },
+      {
+        "name": "untitled",
+        "type": "text",
+        "label": "Untitled",
+        "importance": "low",
+        "default": "Untitled"
       }
     ]
   }

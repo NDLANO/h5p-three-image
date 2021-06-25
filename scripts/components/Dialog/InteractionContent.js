@@ -2,6 +2,7 @@ import React from 'react';
 import './InteractionContent.scss';
 import {H5PContext} from '../../context/H5PContext';
 import AudioButton from '../HUD/Buttons/AudioButton';
+import { isVideoAudio } from '../../utils/audio-utils';
 
 export default class InteractionContent extends React.Component {
   constructor(props) {
@@ -16,7 +17,7 @@ export default class InteractionContent extends React.Component {
     if (this.props.audioIsPlaying && this.props.audioIsPlaying !== prevProps.audioIsPlaying) {
       // The Audio Player has changed
 
-      if (AudioButton.isVideoAudio(prevProps.audioIsPlaying)) {
+      if (isVideoAudio(prevProps.audioIsPlaying)) {
         // Thas last player was us, we need to stop it
 
         // NOTE: This is a hack for Panopto embed player bug where the API
@@ -27,7 +28,7 @@ export default class InteractionContent extends React.Component {
         // this case out, since two videos can never happen at the same time
         // currently. This can be removed when Panopto has fixed their
         // API. See HFP-3191
-        if (!AudioButton.isVideoAudio(this.props.audioIsPlaying)) {
+        if (!isVideoAudio(this.props.audioIsPlaying)) {
           this.instance.pause();
         }
       }
@@ -80,7 +81,7 @@ export default class InteractionContent extends React.Component {
 
     this.instance.on('resize', () => this.props.onResize());
     this.instance.on("xAPI", (event) => {
-        if(event.data.statement.verb.id === "http://adlnet.gov/expapi/verbs/completed"){
+        if(event.data.statement.verb.id === "http://adlnet.gov/expapi/verbs/answered"){
           this.props.updateScoreCard(this.props.currentScene, this.props.currentInteraction, event.data.statement.result.score);
         }
     });
