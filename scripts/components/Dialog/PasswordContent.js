@@ -107,7 +107,7 @@ export default class PasswordContent extends React.Component {
                 value={this.state.inputPassword}
                 onChange={this.handleOnChange}
               />
-            </div>            
+            </div>
             {this.props.hint && (
               <span className={"h5p-field-text"}>
                 {`${this.context.l10n.hint}: ${this.props.hint}`}
