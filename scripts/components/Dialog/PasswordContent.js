@@ -118,7 +118,7 @@ export default class PasswordContent extends React.Component {
             </div>
             {this.props.hint && (
               <div className={"h5p-field-text"}>
-                {`${this.context.l10n.hint}: `}
+                <span className="h5p-password-hint-label">{`${this.context.l10n.hint}: `}</span>
                 <div className="h5p-password-hint" dangerouslySetInnerHTML={{ __html: this.props.hint }} />
               </div>
             )}
