@@ -384,7 +384,7 @@ export default class ThreeSixtyScene extends React.Component {
     
     const is3d = renderIn3d(interaction);
     const component = (
-      interaction?.label.showAsOpenSceneContent ?
+      interaction.label?.showAsOpenSceneContent ?
         <OpenContent
           key={key}
           mouseDownHandler={null}
