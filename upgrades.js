@@ -15,9 +15,6 @@ H5PUpgrades['H5P.ThreeImage'] = (function () {
         finished(null, parameters);
       },
       4: function (parameters, finished) {
-        console.log("UPDATING VIRTUAL TOUR TO VERSION 0.4.\nParameters:");
-        console.log(parameters);
-        
         if (parameters && parameters.context.behaviour) {
           parameters.context.behaviour.label = {
             showLabel: false,
