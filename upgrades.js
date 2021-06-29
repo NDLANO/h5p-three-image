@@ -24,6 +24,22 @@ H5PUpgrades['H5P.ThreeImage'] = (function () {
             labelPosition: 'right'
           };
         }
+
+        if (parameters && parameters.scenes) {
+          for (const scene of parameters.scenes) {
+            if (scene.interactions) {
+              for (const interaction of interactions) {
+                if (!interaction.label) {
+                  interaction.label = {
+                    labelPosition: 'inherit',
+                    showLabel: 'inherit',
+                  }
+                }
+              }
+            }
+          }
+        }
+
         finished(null, parameters);
       }
     }
