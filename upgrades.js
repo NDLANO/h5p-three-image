@@ -18,15 +18,15 @@ H5PUpgrades['H5P.ThreeImage'] = (function () {
         console.log("UPDATING VIRTUAL TOUR TO VERSION 0.4.\nParameters:");
         console.log(parameters);
         
-        if (parameters && parameters.behaviour) {
-          parameters.behaviour.label = {
+        if (parameters && parameters.context.behaviour) {
+          parameters.context.behaviour.label = {
             showLabel: false,
             labelPosition: 'right'
           };
         }
 
-        if (parameters && parameters.scenes) {
-          for (const scene of parameters.scenes) {
+        if (parameters && parameters.context.scenes) {
+          for (const scene of parameters.context.scenes) {
             if (scene.interactions) {
               for (const interaction of interactions) {
                 if (!interaction.label) {
