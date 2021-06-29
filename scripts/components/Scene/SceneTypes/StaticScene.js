@@ -421,9 +421,9 @@ export default class StaticScene extends React.Component {
               }
 
               const key = interaction.id || `interaction-${this.props.sceneId}${index}`
-              
+
               return (
-                interaction.label?.showAsOpenSceneContent ?
+                interaction.label.showAsOpenSceneContent ?
                 <OpenContent
                   key={key}
                   staticScene={true}

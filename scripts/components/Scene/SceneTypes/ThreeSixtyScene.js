@@ -383,6 +383,7 @@ export default class ThreeSixtyScene extends React.Component {
     const key = interaction.id || `interaction-${this.props.sceneId}${index}`
     
     const is3d = renderIn3d(interaction);
+
     const component = (
       interaction.label?.showAsOpenSceneContent ?
         <OpenContent
